@@ -12,18 +12,18 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Класс реализует алгоритм линейной регрессии
+ * РљР»Р°СЃСЃ СЂРµР°Р»РёР·СѓРµС‚ Р°Р»РіРѕСЂРёС‚Рј Р»РёРЅРµР№РЅРѕР№ СЂРµРіСЂРµСЃСЃРёРё
  */
 public class RegressionAlgorithm implements Algorithm {
     /**
-     * Метод реализует алгоритм регрессии по формуле: Y=a+bx
-     * где Y: dependent variable -результат
-     * a: intersect variable with Y-среднее ,узнаем по формуле a=y-bx (xWithBar)(yWithBar)
-     * b: slope-отклонение  ,узнаем по формуле b=(sum xy)-nxy)/(sum x*x)-n(x*x))
-     * x: independent variable- дата
-     * добавит String result в файл из листа
+     * РњРµС‚РѕРґ СЂРµР°Р»РёР·СѓРµС‚ Р°Р»РіРѕСЂРёС‚Рј СЂРµРіСЂРµСЃСЃРёРё РїРѕ С„РѕСЂРјСѓР»Рµ: Y=a+bx
+     * РіРґРµ Y: dependent variable -СЂРµР·СѓР»СЊС‚Р°С‚
+     * a: intersect variable with Y-СЃСЂРµРґРЅРµРµ ,СѓР·РЅР°РµРј РїРѕ С„РѕСЂРјСѓР»Рµ a=y-bx (xWithBar)(yWithBar)
+     * b: slope-РѕС‚РєР»РѕРЅРµРЅРёРµ  ,СѓР·РЅР°РµРј РїРѕ С„РѕСЂРјСѓР»Рµ b=(sum xy)-nxy)/(sum x*x)-n(x*x))
+     * x: independent variable- РґР°С‚Р°
+     * РґРѕР±Р°РІРёС‚ String result РІ С„Р°Р№Р» РёР· Р»РёСЃС‚Р°
      *
-     * @param list CurrencyFileReader -файлов в которых есть лист дат лист курсов и количество дней для прогноза
+     * @param list CurrencyFileReader -С„Р°Р№Р»РѕРІ РІ РєРѕС‚РѕСЂС‹С… РµСЃС‚СЊ Р»РёСЃС‚ РґР°С‚ Р»РёСЃС‚ РєСѓСЂСЃРѕРІ Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РґР»СЏ РїСЂРѕРіРЅРѕР·Р°
      */
     @Override
     public void realizeAlgorithm(List<CurrencyFileReader> list) {
@@ -50,12 +50,12 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод получает среднее & отклонение
-     * a: intersect variable with Y-среднее ,узнаем по формуле a=y-bx (xWithBar)(yWithBar)
-     * b: slope-отклонение  ,узнаем по формуле b=(sum xy)-nxy)/sum(x*x)-n(x*x))
+     * РњРµС‚РѕРґ РїРѕР»СѓС‡Р°РµС‚ СЃСЂРµРґРЅРµРµ & РѕС‚РєР»РѕРЅРµРЅРёРµ
+     * a: intersect variable with Y-СЃСЂРµРґРЅРµРµ ,СѓР·РЅР°РµРј РїРѕ С„РѕСЂРјСѓР»Рµ a=y-bx (xWithBar)(yWithBar)
+     * b: slope-РѕС‚РєР»РѕРЅРµРЅРёРµ  ,СѓР·РЅР°РµРј РїРѕ С„РѕСЂРјСѓР»Рµ b=(sum xy)-nxy)/sum(x*x)-n(x*x))
      *
-     * @param dateListForRegression,rateListForRegression лист курсов и дат в BigDecimal
-     * @return список из значений a и b
+     * @param dateListForRegression,rateListForRegression Р»РёСЃС‚ РєСѓСЂСЃРѕРІ Рё РґР°С‚ РІ BigDecimal
+     * @return СЃРїРёСЃРѕРє РёР· Р·РЅР°С‡РµРЅРёР№ a Рё b
      */
     private List<BigDecimal> getIntersectVariableAndSlopeValues(List<BigDecimal> dateListForRegression,
                                                                 List<BigDecimal> rateListForRegression) {
@@ -75,21 +75,21 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт среднее
-     * a: intersect variable with Y-среднее ,узнаем по формуле a=y-bx (xWithBar)(yWithBar)
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ СЃСЂРµРґРЅРµРµ
+     * a: intersect variable with Y-СЃСЂРµРґРЅРµРµ ,СѓР·РЅР°РµРј РїРѕ С„РѕСЂРјСѓР»Рµ a=y-bx (xWithBar)(yWithBar)
      *
-     * @param yWithBar,b,xWithBar -среднее число по курсам, отклонение, среднее число по датам
-     * @return значение a- среднее
+     * @param yWithBar,b,xWithBar -СЃСЂРµРґРЅРµРµ С‡РёСЃР»Рѕ РїРѕ РєСѓСЂСЃР°Рј, РѕС‚РєР»РѕРЅРµРЅРёРµ, СЃСЂРµРґРЅРµРµ С‡РёСЃР»Рѕ РїРѕ РґР°С‚Р°Рј
+     * @return Р·РЅР°С‡РµРЅРёРµ a- СЃСЂРµРґРЅРµРµ
      */
     private BigDecimal getIntersectVariable(BigDecimal yWithBar, BigDecimal b, BigDecimal xWithBar) {
         return yWithBar.subtract(b.multiply(xWithBar));
     }
 
     /**
-     * Метод выдаёт лист дат в BigDecimal
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ Р»РёСЃС‚ РґР°С‚ РІ BigDecimal
      *
-     * @param dateList -лист дат из файла
-     * @return лист счётчика дат
+     * @param dateList -Р»РёСЃС‚ РґР°С‚ РёР· С„Р°Р№Р»Р°
+     * @return Р»РёСЃС‚ СЃС‡С‘С‚С‡РёРєР° РґР°С‚
      */
     public List<BigDecimal> getDateListToBigDecimal(List<LocalDate> dateList) {
         List<BigDecimal> BigDecimalDateList = new ArrayList<>();
@@ -100,10 +100,10 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт лист дат прогноза в BigDecimal
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ Р»РёСЃС‚ РґР°С‚ РїСЂРѕРіРЅРѕР·Р° РІ BigDecimal
      *
-     * @param dateList -лист дат по которым будет прогноз
-     * @return лист счётчика дат+счётчик дат прогноза
+     * @param dateList -Р»РёСЃС‚ РґР°С‚ РїРѕ РєРѕС‚РѕСЂС‹Рј Р±СѓРґРµС‚ РїСЂРѕРіРЅРѕР·
+     * @return Р»РёСЃС‚ СЃС‡С‘С‚С‡РёРєР° РґР°С‚+СЃС‡С‘С‚С‡РёРє РґР°С‚ РїСЂРѕРіРЅРѕР·Р°
      */
     public List<BigDecimal> getDateListToForecastDate(List<LocalDate> dateList, List<LocalDate> forecastDate) {
         List<BigDecimal> BigDecimalDateList = new ArrayList<>();
@@ -114,10 +114,10 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт лист курсов в BigDecimal
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ Р»РёСЃС‚ РєСѓСЂСЃРѕРІ РІ BigDecimal
      *
-     * @param rateList -лист курсов по которым будет прогноз
-     * @return лист курсов в BigDecimal;
+     * @param rateList -Р»РёСЃС‚ РєСѓСЂСЃРѕРІ РїРѕ РєРѕС‚РѕСЂС‹Рј Р±СѓРґРµС‚ РїСЂРѕРіРЅРѕР·
+     * @return Р»РёСЃС‚ РєСѓСЂСЃРѕРІ РІ BigDecimal;
      */
     public List<BigDecimal> getRateListForRegression(List<BigDecimal> rateList) {
         List<BigDecimal> rateListForRegression = new ArrayList<>(rateList);
@@ -126,10 +126,10 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт лист суммы курсов и даты (sum xy)
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ Р»РёСЃС‚ СЃСѓРјРјС‹ РєСѓСЂСЃРѕРІ Рё РґР°С‚С‹ (sum xy)
      *
-     * @param dateListForRegression,rateListForRegression -лист курсов и дат в BigDecimal
-     * @return лист (sum xy);
+     * @param dateListForRegression,rateListForRegression -Р»РёСЃС‚ РєСѓСЂСЃРѕРІ Рё РґР°С‚ РІ BigDecimal
+     * @return Р»РёСЃС‚ (sum xy);
      */
     private List<BigDecimal> getRateAndDateSum(List<BigDecimal> dateListForRegression,
                                                List<BigDecimal> rateListForRegression) {
@@ -141,9 +141,9 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт сумму листа
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ СЃСѓРјРјСѓ Р»РёСЃС‚Р°
      *
-     * @param listBigDecimal -лист BigDecimal
+     * @param listBigDecimal -Р»РёСЃС‚ BigDecimal
      * @return total values
      */
     private BigDecimal getSumBigDecimalList(List<BigDecimal> listBigDecimal) {
@@ -151,9 +151,9 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт лист площади курсов валют
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ Р»РёСЃС‚ РїР»РѕС‰Р°РґРё РєСѓСЂСЃРѕРІ РІР°Р»СЋС‚
      *
-     * @param dateListForRegression -лист дат для которых нужен прогноз
+     * @param dateListForRegression -Р»РёСЃС‚ РґР°С‚ РґР»СЏ РєРѕС‚РѕСЂС‹С… РЅСѓР¶РµРЅ РїСЂРѕРіРЅРѕР·
      * @return list<rate * rate>
      */
     private List<BigDecimal> getXSquareInList(List<BigDecimal> dateListForRegression) {
@@ -165,14 +165,14 @@ public class RegressionAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод выдаёт b,slope-отклонение  ,узнаем по формуле b=(sum xy)-nxy)/(sum x*x)-n(x*x))
+     * РњРµС‚РѕРґ РІС‹РґР°С‘С‚ b,slope-РѕС‚РєР»РѕРЅРµРЅРёРµ  ,СѓР·РЅР°РµРј РїРѕ С„РѕСЂРјСѓР»Рµ b=(sum xy)-nxy)/(sum x*x)-n(x*x))
      * xAndYSumListTotal-(sum xy)
      * n-sizeDateList
      * xWithBar-x
      * yWithBar-y
      * (sum x*x)-xSquareSum
      *
-     * @param xAndYSumListTotal,sizeDateList,xWithBar,yWithBar,yWithBar -лист дат для которых нужен прогноз
+     * @param xAndYSumListTotal,sizeDateList,xWithBar,yWithBar,yWithBar -Р»РёСЃС‚ РґР°С‚ РґР»СЏ РєРѕС‚РѕСЂС‹С… РЅСѓР¶РµРЅ РїСЂРѕРіРЅРѕР·
      * @return b
      */
     private BigDecimal getSlope(BigDecimal xAndYSumListTotal, Integer sizeDateList,

@@ -2,13 +2,10 @@ package ru.liga.commands;
 
 import lombok.Getter;
 import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.liga.algorithm.ActualAlgorithm;
 import ru.liga.algorithm.Algorithm;
 import ru.liga.algorithm.MysticalAlgorithm;
 import ru.liga.algorithm.RegressionAlgorithm;
-import ru.liga.bot.Bot;
 import ru.liga.chart.Chart;
 import ru.liga.currencyFile.CurrencyFileReader;
 
@@ -31,7 +28,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public enum Commands implements AllCommands {
     /**
      * ENUM ALG
-     *
+     * <p>
      * есть команда и список аргументов
      * есть метод, который в зависимости от полученного аргумента вызывает конструктор
      * алгоритма
@@ -62,7 +59,7 @@ public enum Commands implements AllCommands {
     },
     /**
      * ENUM DATE
-     *
+     * <p>
      * есть команда и список аргументов
      * есть метод, который в зависимости от полученного аргумента создаст список дат
      * прогноза
@@ -85,7 +82,7 @@ public enum Commands implements AllCommands {
     },
     /**
      * ENUM PERIOD
-     *
+     * <p>
      * есть команда и список аргументов
      * есть метод, который в зависимости от полученного аргумента создаст список дат
      * прогноза
@@ -94,7 +91,7 @@ public enum Commands implements AllCommands {
         @Override
         public List<CurrencyFileReader> action(String argument, List<CurrencyFileReader> list) {
             checkArguments(argument);
-            List<LocalDate> listDateResult ;
+            List<LocalDate> listDateResult;
             if (argument.equals("month")) {
                 listDateResult = datesRangeClosed(LocalDate.now().plusDays(1),
                         LocalDate.now().plusMonths(1).plusDays(1));
@@ -109,7 +106,7 @@ public enum Commands implements AllCommands {
     },
     /**
      * ENUM OUTPUT
-     *
+     * <p>
      * есть команда и список аргументов
      * есть метод, который в зависимости от полученного аргумента выдаст результат в
      * разных форматах
@@ -150,11 +147,9 @@ public enum Commands implements AllCommands {
      * @param argument-аргумент после команды new RuntimeException if false
      */
     protected void checkArguments(String argument) {
-        if (arguments.contains(argument)) {
-        } else {
-            Logger logger = LoggerFactory.getLogger(Commands.class);
-            logger.error("Ошибка неправильный аргумент");
-            throw new RuntimeException();
+        if (!arguments.contains(argument)) {
+
+            throw new RuntimeException("Ошибка неправильный аргумент");
         }
     }
 

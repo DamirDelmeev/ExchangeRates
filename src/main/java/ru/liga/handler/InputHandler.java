@@ -1,8 +1,6 @@
 package ru.liga.handler;
 
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.liga.commands.Commands;
 import ru.liga.currencyFile.Currency;
 import ru.liga.currencyFile.CurrencyFileReader;
@@ -12,23 +10,25 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Класс обработчик ввода
+ * РљР»Р°СЃСЃ РѕР±СЂР°Р±РѕС‚С‡РёРє РІРІРѕРґР°
  */
 public class InputHandler {
     /**
-     * Ввод пользователя
+     * Р’РІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
      */
     private final String userIn;
 
     /**
-     * Список доступных команд
+     * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРѕРјР°РЅРґ
      */
     private final List<String> availableCommands = Arrays.asList("rate", "-alg", "actual", "mystical", "regression",
             "-date", "tomorrow", "-output", "list", "graph", "-period", "month", "week",
             Currency.AMD.getName(), Currency.EUR.getName(), Currency.USD.getName(), Currency.TRY.getName(),
             Currency.BGN.getName());
+
+
     /**
-     * Проверка на наличие недопустимых слов вводе
+     * РџСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ РЅРµРґРѕРїСѓСЃС‚РёРјС‹С… СЃР»РѕРІ РІРІРѕРґРµ
      */
     @Getter
     public boolean isUserCommands;
@@ -39,28 +39,26 @@ public class InputHandler {
     }
 
     /**
-     * Метод проверяет ввод пользователя.
+     * РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
      *
-     * @return boolean если ввод будет содержать недопустимые команды.
+     * @return boolean РµСЃР»Рё РІРІРѕРґ Р±СѓРґРµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РЅРµРґРѕРїСѓСЃС‚РёРјС‹Рµ РєРѕРјР°РЅРґС‹.
      */
     public boolean checkUserCommands() {
-        Logger logger = LoggerFactory.getLogger(InputHandler.class);
         for (String commands : userIn.split("[ ,]")) {
             if (commands.matches("\\d*\\.\\d*\\.\\d*")) {
                 return true;
             }
             if (!availableCommands.contains(commands)) {
-                logger.error("Ошибка неправильная команда.");
-                throw new RuntimeException();
+                throw new RuntimeException("РћС€РёР±РєР° РЅРµРїСЂР°РІРёР»СЊРЅР°СЏ РєРѕРјР°РЅРґР° РёР»Рё Р°СЂРіСѓРјРµРЅС‚");
             }
         }
         return true;
     }
 
     /**
-     * Метод определяющий тип валюты.
+     * РњРµС‚РѕРґ РѕРїСЂРµРґРµР»СЏСЋС‰РёР№ С‚РёРї РІР°Р»СЋС‚С‹.
      *
-     * @return возвращает список CurrencyFileReader в этих объектах будет список курсов валюты.
+     * @return РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє CurrencyFileReader РІ СЌС‚РёС… РѕР±СЉРµРєС‚Р°С… Р±СѓРґРµС‚ СЃРїРёСЃРѕРє РєСѓСЂСЃРѕРІ РІР°Р»СЋС‚С‹.
      */
     public List<CurrencyFileReader> defineCurrencyType() {
         List<CurrencyFileReader> currencyFileList = new ArrayList<>();
@@ -76,9 +74,9 @@ public class InputHandler {
     }
 
     /**
-     * Метод реализует взаимодействие файла из листа и команд пользователя
+     * РњРµС‚РѕРґ СЂРµР°Р»РёР·СѓРµС‚ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ С„Р°Р№Р»Р° РёР· Р»РёСЃС‚Р° Рё РєРѕРјР°РЅРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
      *
-     * @return List<CurrencyFileReader> с результатами
+     * @return List<CurrencyFileReader> СЃ СЂРµР·СѓР»СЊС‚Р°С‚Р°РјРё
      */
     public List<CurrencyFileReader> realizeCommands() {
         List<CurrencyFileReader> action = new ArrayList<>();
@@ -92,8 +90,6 @@ public class InputHandler {
                     action = Commands.checkCommands(commandsAndArgument[0]).action(commandsAndArgument[1], currencyFileReaders);
                 }
             }
-        } else {
-            throw new RuntimeException();
         }
         return action;
     }

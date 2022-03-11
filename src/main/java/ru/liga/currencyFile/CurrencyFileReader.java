@@ -11,10 +11,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Класс читает файл с курсами валюты.
@@ -76,7 +74,7 @@ public class CurrencyFileReader {
             String[] lines;
             while ((lines = csvFile.readNext()) != null) {
                 if (!lines[0].contains("nominal")) {
-                    String line = Arrays.stream(lines).collect(Collectors.joining(";"));
+                    String line = String.join(";", lines);
                     lineList.add(line.replaceAll(",", "."));
                 }
             }
@@ -99,7 +97,7 @@ public class CurrencyFileReader {
         for (String line : lineList) {
             String[] split = line.split(";");
             BigDecimal currentRate = BigDecimal.valueOf(RefactorOurLineForDouble(split));
-            BigDecimal nominal = BigDecimal.valueOf(Double.valueOf(split[0]));
+            BigDecimal nominal = BigDecimal.valueOf(Double.parseDouble(split[0]));
             LocalDate currentDate = LocalDate.parse(split[1], formatter);
             if (currentDate.plusDays(counterDays).equals(dateList.get(0))) {
                 currentRate = currentRate.divide(nominal);
@@ -139,7 +137,7 @@ public class CurrencyFileReader {
     private Period getPeriodOfSkipAndAddChanges(String[] split, LocalDate checkIfDateSkip, BigDecimal nominal) {
         Period between = Period.between(checkIfDateSkip, dateList.getLast());
         for (int i = 1; i < between.getDays(); i++) {
-            rateList.add(BigDecimal.valueOf(Double.valueOf(split[2])).divide(nominal));
+            rateList.add(BigDecimal.valueOf(Double.parseDouble(split[2])).divide(nominal));
             dateList.add(dateList.getLast().minusDays(1));
         }
         return between;

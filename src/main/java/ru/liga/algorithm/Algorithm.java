@@ -8,5 +8,5 @@ import java.util.List;
  * Интерфейс алгоритм
  */
 public interface Algorithm {
-     void realizeAlgorithm(List<CurrencyFileReader> list);
+    void realizeAlgorithm(List<CurrencyFileReader> list);
 }
