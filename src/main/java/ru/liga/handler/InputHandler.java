@@ -48,7 +48,7 @@ public class InputHandler {
                 return true;
             }
             if (!availableCommands.contains(commands)) {
-                throw new RuntimeException("Ошибка неправильная команда или аргумент");
+                throw new RuntimeException("Ошибка неправильная команда или аргумент.");
             }
         }
         return true;
@@ -78,7 +78,7 @@ public class InputHandler {
      * @return List<CurrencyFileReader> с результатами.
      */
     public List<CurrencyFileReader> realizeCommands() {
-        List<CurrencyFileReader> action = new ArrayList<>();
+        List<CurrencyFileReader> listAfterAction = new ArrayList<>();
         if (isUserCommands) {
             String substring = userIn.substring(userIn.indexOf('-'));
             String[] commands = substring.split("-");
@@ -86,10 +86,11 @@ public class InputHandler {
             for (String command : commands) {
                 if (!command.isEmpty()) {
                     String[] commandsAndArgument = command.split(" ");
-                    action = Commands.checkCommands(commandsAndArgument[0]).action(commandsAndArgument[1], currencyFileReaders);
+                    listAfterAction = Commands.checkCommands(commandsAndArgument[0])
+                            .action(commandsAndArgument[1], currencyFileReaders);
                 }
             }
         }
-        return action;
+        return listAfterAction;
     }
 }

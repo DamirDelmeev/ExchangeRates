@@ -36,11 +36,11 @@ public class CurrencyFileReader {
     /**
      * Поле: лист списка BigDecimal(rate) из файла с заполненными пробелами.
      */
-    private final LinkedList<BigDecimal> rateList = new LinkedList<>();
+    private List<BigDecimal> rateList = new ArrayList<>();
     /**
      * Поле: лист списка LocalDate из файла с заполненными пробелами.
      */
-    private final LinkedList<LocalDate> dateList = new LinkedList<>();
+    private LinkedList<LocalDate> dateList = new LinkedList<>();
     /**
      * Поле: лист списка LocalDate с датами прогноза.
      */

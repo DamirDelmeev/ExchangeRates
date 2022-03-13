@@ -114,7 +114,7 @@ public enum Commands implements AllCommands {
             if (argument.equals("graph")) {
                 list.get(0).setShowChart(true);
                 Chart lineChartSample = new Chart();
-                File extracted = lineChartSample.extracted(list);
+                File extracted = lineChartSample.getChart(list);
                 list.get(0).setFile(extracted);
             }
             return list;
@@ -138,7 +138,7 @@ public enum Commands implements AllCommands {
     /**
      * Метод реализует проверку на наличие аргумента в списке.
      */
-    protected boolean checkArguments(String argument) {
+    private boolean checkArguments(String argument) {
         return arguments.contains(argument);
     }
 
@@ -160,7 +160,7 @@ public enum Commands implements AllCommands {
      * @param date- аргумент (из ввода пользователя)
      * @return boolean
      */
-    public boolean isDate(String date) {
+    protected boolean isDate(String date) {
         try {
             parseDate(date);
             return true;
@@ -175,7 +175,7 @@ public enum Commands implements AllCommands {
      * @param date- аргумент (из ввода пользователя)
      * @return LocalDate
      */
-    public LocalDate parseDate(String date) {
+    protected LocalDate parseDate(String date) {
         try {
             return DateUtils.parseDate(date,
                     "d.MM.yyyy").toInstant().atZone(TimeZone.getDefault().toZoneId()).toLocalDate();

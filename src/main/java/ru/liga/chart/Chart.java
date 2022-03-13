@@ -22,7 +22,7 @@ public class Chart {
      * @param currencyFileReaders лист файлов
      * @return File
      */
-    public File extracted(List<CurrencyFileReader> currencyFileReaders) {
+    public File getChart(List<CurrencyFileReader> currencyFileReaders) {
         String name = UUID.randomUUID().toString();
         String path = "target/" + name + ".png";
         Plot plt = Plot.create();
@@ -53,8 +53,8 @@ public class Chart {
         List<Double> rate = new ArrayList<>();
         for (int i = 0; i < file.getRateForForecastList().size(); i++) {
             String format = String.format(Constant.BIG_DECIMAL_FORMAT.getName(), file.getRateForForecastList().get(i));
-            String s = format.replaceAll(",", "\\.");
-            Double aDouble = Double.valueOf(s);
+            String line = format.replaceAll(",", "\\.");
+            Double aDouble = Double.valueOf(line);
             rate.add(aDouble);
         }
         plt.plot().add(x, rate)

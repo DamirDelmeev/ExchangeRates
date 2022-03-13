@@ -1,5 +1,6 @@
 package ru.liga.algorithms;
 
+import lombok.Data;
 import ru.liga.constants.Constant;
 import ru.liga.currencyFile.CurrencyFileReader;
 
@@ -12,7 +13,13 @@ import java.util.List;
 /**
  * Класс реализует алгоритм "актуальный".
  */
+@Data
 public class ActualAlgorithm implements Algorithm {
+    /**
+     * Поле список курсов используется для тестов.
+     */
+    List<BigDecimal> resultsRateTest = new ArrayList<>();
+
     /**
      * Метод реализует работу алгоритма.
      *
@@ -37,6 +44,7 @@ public class ActualAlgorithm implements Algorithm {
                 );
         currencyFileReader.setResultString(String.join("\n", stringList));
         currencyFileReader.setRateForForecastList(resultsRate);
+        resultsRateTest=new ArrayList<>(resultsRate);
     }
 
     /**

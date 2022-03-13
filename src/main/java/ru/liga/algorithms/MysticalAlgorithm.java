@@ -1,6 +1,6 @@
 package ru.liga.algorithms;
 
-import lombok.Getter;
+import lombok.Data;
 import ru.liga.constants.Constant;
 import ru.liga.currencyFile.CurrencyFileReader;
 
@@ -16,7 +16,10 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Класс реализует алгоритм мистический.
  */
+@Data
 public class MysticalAlgorithm implements Algorithm {
+
+
     /**
      * Поле random.
      */
@@ -24,8 +27,15 @@ public class MysticalAlgorithm implements Algorithm {
     /**
      * Поле список дат полнолуния.
      */
-    @Getter
-    List<LocalDate> moodDate = new ArrayList<>();
+    List<LocalDate> moonDate = new ArrayList<>();
+    /**
+     * Поле список курсов используется для тестов.
+     */
+    List<BigDecimal> resultsRateTest = new ArrayList<>();
+    /**
+     * Поле список результатов используется для тестов.
+     */
+    List<String> stringListTest = new ArrayList<>();
 
     /**
      * Метод реализует алгоритм мистический.
@@ -43,18 +53,18 @@ public class MysticalAlgorithm implements Algorithm {
      * @param currencyFileReader - файлы, в которых есть лист дат лист курсов и количество дней для прогноза.
      */
     private void getResult(CurrencyFileReader currencyFileReader) {
-        List<LocalDate> moonDate = getMoonDate();
         List<BigDecimal> resultsRate = new ArrayList<>();
         List<String> stringList = new ArrayList<>();
-
+        moonDate = getMoonDate();
         if (currencyFileReader.getDateForForecastList().size() == 1) {
             getForecastOnFirstDay(currencyFileReader, moonDate, resultsRate, stringList);
         } else {
             getForecastOnOtherDay(currencyFileReader, moonDate, resultsRate, stringList);
         }
-
         currencyFileReader.setResultString(String.join("\n", stringList));
         currencyFileReader.setRateForForecastList(resultsRate);
+        resultsRateTest=new ArrayList<>(resultsRate);
+        stringListTest=new ArrayList<>(stringList);
     }
 
     /**
@@ -65,7 +75,7 @@ public class MysticalAlgorithm implements Algorithm {
      * - значение предыдущей даты + случайное число от -10% до +10% от значения предыдущей даты.
      *
      * @param currencyFileReader,moonDate,resultRate,stringList -файл в котором есть лист дат лист курсов и количество
-     *                                                           дней для прогноза.
+     *                                                          дней для прогноза.
      *                                                          - список дат полнолуния.
      *                                                          -список курсов в результат.
      *                                                          -список строк результата с датами и курсами.

@@ -7,6 +7,12 @@
     <file url="file://$PROJECT_DIR$/src/main/java/ru/liga/handler/InputHandler.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/AMD_F01_02_2005_T05_03_2022.csv" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ru/liga/algorithms/ActualAlgorithmTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ru/liga/algorithms/MysticalAlgorithmTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ru/liga/algorithms/RegressionAlgorithmTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ru/liga/chart/ChartTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ru/liga/currencyFile/CurrencyFileReaderTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ru/liga/handler/InputHandlerTest.java" charset="UTF-8" />
     <file url="PROJECT" charset="windows-1251" />
   </component>
 </project>

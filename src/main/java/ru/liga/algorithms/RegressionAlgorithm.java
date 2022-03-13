@@ -1,5 +1,6 @@
 package ru.liga.algorithms;
 
+import lombok.Data;
 import ru.liga.constants.Constant;
 import ru.liga.currencyFile.CurrencyFileReader;
 
@@ -7,15 +8,22 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Класс реализует алгоритм линейной регрессии.
  */
+@Data
 public class RegressionAlgorithm implements Algorithm {
+    /**
+     * Поле список результатов используется для тестов.
+     */
+    List<String> stringListTest = new ArrayList<>();
+    /**
+     * Поле список курсов используется для тестов.
+     */
+    List<BigDecimal> resultsRateTest = new ArrayList<>();
+
     /**
      * Метод реализует алгоритм регрессии.
      *
@@ -37,6 +45,7 @@ public class RegressionAlgorithm implements Algorithm {
      * @param currencyFileReader -файл, в котором есть лист дат, лист курсов и количество дней для прогноза.
      */
     private void getResult(CurrencyFileReader currencyFileReader) {
+        List<BigDecimal> resultsRate = new ArrayList<>();
         List<String> stringList = new ArrayList<>();
         List<BigDecimal> dateListForRegression = getDateListToBigDecimal(currencyFileReader.getDateList());
         List<BigDecimal> rateListForRegression = getRateListForRegression(currencyFileReader.getRateList());
@@ -44,17 +53,28 @@ public class RegressionAlgorithm implements Algorithm {
                 getIntersectVariableAndSlopeValues(dateListForRegression, rateListForRegression);
         List<BigDecimal> dateListToForecastDate = getDateListToForecastDate(currencyFileReader.getDateList(),
                 currencyFileReader.getDateForForecastList());
-        List<BigDecimal> results = new ArrayList<>();
-        dateListToForecastDate.forEach(date -> results
+
+        dateListToForecastDate.forEach(date -> resultsRate
                 .add(bAndAValues.get(0)
                         .add(bAndAValues.get(1).multiply(date))));
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(Constant.DATE_FORMAT.getName());
         for (int i = 0; i < currencyFileReader.getDateForForecastList().size(); i++) {
             stringList.add(dateFormat.format(currencyFileReader.getDateForForecastList().get(i))
-                    + " : " + String.format(Constant.BIG_DECIMAL_FORMAT.getName(), results.get(i)));
+                    + " : " + String.format(Constant.BIG_DECIMAL_FORMAT.getName(), resultsRate.get(i)));
         }
+        setAllList(currencyFileReader, resultsRate, stringList);
+    }
+
+    /**
+     * Метод задаёт значение для файла и тестов.
+     *
+     * @param currencyFileReader,resultsRate,stringList файлы,курсы,строки
+     */
+    private void setAllList(CurrencyFileReader currencyFileReader, List<BigDecimal> resultsRate, List<String> stringList) {
         currencyFileReader.setResultString(String.join("\n", stringList));
-        currencyFileReader.setRateForForecastList(results);
+        currencyFileReader.setRateForForecastList(resultsRate);
+        resultsRateTest = new ArrayList<>(resultsRate);
+        stringListTest = new ArrayList<>(stringList);
     }
 
     /**
@@ -99,9 +119,10 @@ public class RegressionAlgorithm implements Algorithm {
      * Метод выдаёт лист дат в BigDecimal.
      *
      * @param dateList - лист дат из файла.
+     *                 +1 чтобы не умножать 0 на курс
      * @return лист счётчика дат.
      */
-    private List<BigDecimal> getDateListToBigDecimal(List<LocalDate> dateList) {
+    private List<BigDecimal> getDateListToBigDecimal(LinkedList<LocalDate> dateList) {
         List<BigDecimal> BigDecimalDateList = new ArrayList<>();
         dateList.forEach(localDate -> BigDecimalDateList.add(BigDecimal.valueOf((dateList.indexOf(localDate) + 1))));
         return BigDecimalDateList;
@@ -113,7 +134,7 @@ public class RegressionAlgorithm implements Algorithm {
      * @param dateList -лист дат по которым будет прогноз.
      * @return лист счётчика дат+счётчик дат прогноза.
      */
-    public List<BigDecimal> getDateListToForecastDate(List<LocalDate> dateList, List<LocalDate> forecastDate) {
+    private List<BigDecimal> getDateListToForecastDate(List<LocalDate> dateList, List<LocalDate> forecastDate) {
         List<BigDecimal> BigDecimalDateList = new ArrayList<>();
         forecastDate.forEach(localDate ->
                 BigDecimalDateList.add(BigDecimal.valueOf((forecastDate.indexOf(localDate)) + 1 + dateList.size())));

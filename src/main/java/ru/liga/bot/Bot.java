@@ -79,6 +79,7 @@ public class Bot extends TelegramLongPollingBot {
                 "\nrate BGN -period week -alg regression -output graph" +
                 "\nrate EUR -date tomorrow -alg actual -output list" +
                 "\nrate USD -period week -alg mystical -output graph" +
+                "\nrate USD,EUR -period month -alg mystical -output graph"+
                 "\nrate TRY -date 22.12.2022 -alg actual -output list");
         try {
             execute(message);
