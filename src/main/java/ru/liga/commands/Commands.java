@@ -29,9 +29,8 @@ public enum Commands implements AllCommands {
     /**
      * ENUM ALG
      * <p>
-     * есть команда и список аргументов
-     * есть метод, который в зависимости от полученного аргумента вызывает конструктор
-     * алгоритма
+     * есть команда и список аргументов.
+     * есть метод, который в зависимости от полученного аргумента вызывает конструктор алгоритма.
      */
     ALG("alg", List.of("actual", "mystical", "regression")) {
         @Override
@@ -60,9 +59,8 @@ public enum Commands implements AllCommands {
     /**
      * ENUM DATE
      * <p>
-     * есть команда и список аргументов
-     * есть метод, который в зависимости от полученного аргумента создаст список дат
-     * прогноза
+     * есть команда и список аргументов.
+     * есть метод, который в зависимости от полученного аргумента создаст список дат прогноза.
      */
     DATE("date", List.of("tomorrow")) {
         @Override
@@ -83,9 +81,8 @@ public enum Commands implements AllCommands {
     /**
      * ENUM PERIOD
      * <p>
-     * есть команда и список аргументов
-     * есть метод, который в зависимости от полученного аргумента создаст список дат
-     * прогноза
+     * есть команда и список аргументов.
+     * есть метод, который в зависимости от полученного аргумента создаст список дат прогноза.
      */
     PERIOD("period", List.of("month", "week")) {
         @Override
@@ -107,9 +104,8 @@ public enum Commands implements AllCommands {
     /**
      * ENUM OUTPUT
      * <p>
-     * есть команда и список аргументов
-     * есть метод, который в зависимости от полученного аргумента выдаст результат в
-     * разных форматах
+     * есть команда и список аргументов.
+     * есть метод, который в зависимости от полученного аргумента выдаст результат в разных форматах.
      */
     OUTPUT("output", List.of("graph", "list")) {
         @Override
@@ -140,16 +136,16 @@ public enum Commands implements AllCommands {
     }
 
     /**
-     * Метод реализует проверку на наличие аргумента в списке
+     * Метод реализует проверку на наличие аргумента в списке.
      */
     protected boolean checkArguments(String argument) {
         return arguments.contains(argument);
     }
 
     /**
-     * Метод реализует вызов команды (из ввода пользователя)
+     * Метод реализует вызов команды (из ввода пользователя).
      *
-     * @param commands- команды (из ввода пользователя)
+     * @param commands- команды (из ввода пользователя).
      * @return Commands: -alg=ALG
      */
     public static Commands checkCommands(String commands) {
@@ -159,7 +155,7 @@ public enum Commands implements AllCommands {
     }
 
     /**
-     * Метод реализует проверку аргумента на случай, если это дата
+     * Метод реализует проверку аргумента на случай, если это дата.
      *
      * @param date- аргумент (из ввода пользователя)
      * @return boolean
@@ -174,7 +170,7 @@ public enum Commands implements AllCommands {
     }
 
     /**
-     * Метод реализует parse даты из ввода в формат LocaleDateTime
+     * Метод реализует parse даты из ввода в формат LocaleDateTime.
      *
      * @param date- аргумент (из ввода пользователя)
      * @return LocalDate
@@ -189,7 +185,7 @@ public enum Commands implements AllCommands {
     }
 
     /**
-     * Метод создаёт список дат из полученного периода
+     * Метод создаёт список дат из полученного периода.
      *
      * @param fromInclusive,toInclusive-от даты, до даты
      * @return List<LocalDate>
@@ -202,7 +198,7 @@ public enum Commands implements AllCommands {
     }
 
     /**
-     * Метод реализует проверку на наличие аргумента в списке
+     * Метод реализует проверку на наличие аргумента в списке.
      *
      * @param argument-аргумент после команды new RuntimeException if false
      */

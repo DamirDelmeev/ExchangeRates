@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Класс реализует алгоритм "актуальный"
+ * Класс реализует алгоритм "актуальный".
  */
 public class ActualAlgorithm implements Algorithm {
     /**
-     * Метод реализует работу алгоритма
+     * Метод реализует работу алгоритма.
      *
-     * @param list CurrencyFileReader -файлов в которых есть лист дат лист курсов и количество дней для прогноза
+     * @param list CurrencyFileReader - файлы, в которых есть лист дат, лист курсов и количество дней для прогноза.
      */
     @Override
     public void realizeAlgorithm(List<CurrencyFileReader> list) {
@@ -24,9 +24,10 @@ public class ActualAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод реализует добавление в результаты дат и курсов
+     * Метод реализует добавление в результаты дат и курсов.
      *
-     * @param currencyFileReader CurrencyFileReader -файл в которых есть лист дат лист курсов и количество дней для прогноза
+     * @param currencyFileReader CurrencyFileReader -файлы, в которых есть лист дат, лист курсов и количество дней для
+     *                           прогноза.
      */
     private void getResult(CurrencyFileReader currencyFileReader) {
         List<BigDecimal> resultsRate = new ArrayList<>();
@@ -39,14 +40,15 @@ public class ActualAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод реализует алгоритм "актуальный"
-     * rate(date-2years)+rate(date-3years) добавит String result в файл из листа
+     * Метод реализует алгоритм "актуальный".
+     * rate(date-2years)+rate(date-3years) добавит String result в файл из листа.
      *
-     * @param currencyFileReader,resultsRate,stringList,localDate
-     * currencyFileReader -в которых есть лист дат лист курсов и количество дней для прогноза.
-     *                                                            resultsRate -список курсов, которые будут в результате
-     *                                                            stringList-лист строк результата.
-     *                                                            localDate -дата по которой идёт итерация
+     * @param currencyFileReader,resultsRate,stringList,localDate currencyFileReader - файлы, в которых есть лист дат,
+     *                                                            лист курсов и количество дней для прогноза.
+     *                                                            resultsRate -список курсов, которые будут в
+     *                                                            результате.
+     *                                                            stringList - лист строк результата.
+     *                                                            localDate - дата по которой идёт итерация.
      */
     private void getResults(CurrencyFileReader currencyFileReader, List<BigDecimal> resultsRate
             , List<String> stringList, LocalDate localDate) {

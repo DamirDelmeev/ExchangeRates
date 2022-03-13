@@ -10,16 +10,16 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Класс обработчик ввода
+ * Класс обработчик ввода.
  */
 public class InputHandler {
     /**
-     * Ввод пользователя
+     * Ввод пользователя.
      */
     private final String userIn;
 
     /**
-     * Список доступных команд
+     * Список доступных команд.
      */
     private final List<String> availableCommands = Arrays.asList("rate", "-alg", "actual", "mystical", "regression",
             "-date", "tomorrow", "-output", "list", "graph", "-period", "month", "week",
@@ -27,7 +27,7 @@ public class InputHandler {
             Currency.BGN.getName());
 
     /**
-     * Проверка на наличие недопустимых слов вводе
+     * Проверка на наличие недопустимых слов вводе.
      */
     @Getter
     public boolean isUserCommands;
@@ -73,9 +73,9 @@ public class InputHandler {
     }
 
     /**
-     * Метод реализует взаимодействие файла из листа и команд пользователя
+     * Метод реализует взаимодействие файла из листа и команд пользователя.
      *
-     * @return List<CurrencyFileReader> с результатами
+     * @return List<CurrencyFileReader> с результатами.
      */
     public List<CurrencyFileReader> realizeCommands() {
         List<CurrencyFileReader> action = new ArrayList<>();

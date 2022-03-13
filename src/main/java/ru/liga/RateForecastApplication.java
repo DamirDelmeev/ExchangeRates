@@ -7,10 +7,10 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.liga.bot.Bot;
 
 /**
- * Класс инициализации бота
+ * Класс инициализации бота.
  *
  * @version 1.0
- * @autor Дельмеев Дамир
+ * @autor Дельмеев Дамир.
  */
 public class RateForecastApplication {
     public static void main(String[] args) {

@@ -20,45 +20,45 @@ import java.util.List;
  * Класс читает файл с курсами валюты.
  *
  * @version 1.0
- * @autor Дельмеев Дамир
+ * @autor Дельмеев Дамир.
  */
 @Data
 public class CurrencyFileReader {
 
     /**
-     * Поле тип валюты
+     * Поле: тип валюты.
      */
     private final Currency currency;
     /**
-     * Поле лист списка строк из файла
+     * Поле: лист списка строк из файла.
      */
     private final List<String> lineList = new ArrayList<>();
     /**
-     * Поле лист списка BigDecimal(rate) из файла с заполненными пробелами
+     * Поле: лист списка BigDecimal(rate) из файла с заполненными пробелами.
      */
     private final LinkedList<BigDecimal> rateList = new LinkedList<>();
     /**
-     * Поле лист списка LocalDate из файла с заполненными пробелами
+     * Поле: лист списка LocalDate из файла с заполненными пробелами.
      */
     private final LinkedList<LocalDate> dateList = new LinkedList<>();
     /**
-     * Поле лист списка LocalDate с датами прогноза
+     * Поле: лист списка LocalDate с датами прогноза.
      */
     private List<LocalDate> dateForForecastList = new ArrayList<>();
     /**
-     * Поле лист списка BigDecimal(rate)  с результатами прогноза
+     * Поле лист списка BigDecimal(rate) с результатами прогноза.
      */
     private List<BigDecimal> rateForForecastList = new ArrayList<>();
     /**
-     * Поле строка с результатами прогноза date+rate
+     * Поле: строка с результатами прогноза date+rate.
      */
     public String resultString = "";
     /**
-     * Поле содержит ли файл график
+     * Поле: содержит ли файл график.
      */
     public boolean showChart = false;
     /**
-     * Поле файл содержит график
+     * Поле: файл содержит график.
      */
     public File file;
 
@@ -89,7 +89,7 @@ public class CurrencyFileReader {
     /**
      * Метод обрабатывает список строк и записывает список дат и список курсов валют заполняя пропуски.
      *
-     * @param lineList- список строк из файла
+     * @param lineList- список строк из файла.
      */
     public void findRateListAndDate(List<String> lineList) {
         String[] splitForDate = lineList.get(0).split(";");
@@ -121,8 +121,8 @@ public class CurrencyFileReader {
     /**
      * Метод обрабатывает строку и парсит в дабл курс валюты.
      *
-     * @param split- строка с текущим курсом
-     * @return курсц
+     * @param split- строка с текущим курсом.
+     * @return курс.
      */
     private Double RefactorOurLineForDouble(String[] split) {
         split[2] = split[2].replaceAll("\"", "");
@@ -133,8 +133,8 @@ public class CurrencyFileReader {
     /**
      * Метод обрабатывает строку и вернёт количество пропущенных дней в файле.
      *
-     * @param split- строка с текущим курсом
-     * @return количество дней
+     * @param split- строка с текущим курсом.
+     * @return количество дней.
      */
     private Period getPeriodOfSkipAndAddChanges(String[] split, LocalDate checkIfDateSkip, BigDecimal nominal) {
         Period between = Period.between(checkIfDateSkip, dateList.getLast());

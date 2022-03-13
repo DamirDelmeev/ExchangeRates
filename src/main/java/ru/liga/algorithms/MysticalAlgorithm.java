@@ -14,23 +14,23 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Класс реализует алгоритм мистический
+ * Класс реализует алгоритм мистический.
  */
 public class MysticalAlgorithm implements Algorithm {
     /**
-     * поле random
+     * Поле random.
      */
     private static final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
     /**
-     * поле список дат полнолуния
+     * Поле список дат полнолуния.
      */
     @Getter
     List<LocalDate> moodDate = new ArrayList<>();
 
     /**
-     * Метод реализует алгоритм мистический
+     * Метод реализует алгоритм мистический.
      *
-     * @param list CurrencyFileReader -файлов в которых есть лист дат лист курсов и количество дней для прогноза
+     * @param list CurrencyFileReader - файлы, в которых есть лист дат, лист курсов и количество дней для прогноза.
      */
     @Override
     public void realizeAlgorithm(List<CurrencyFileReader> list) {
@@ -38,9 +38,9 @@ public class MysticalAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод реализует запись результатов после алгоритма мистический
+     * Метод реализует запись результатов после алгоритма мистический.
      *
-     * @param currencyFileReader -файл в котором есть лист дат лист курсов и количество дней для прогноза
+     * @param currencyFileReader - файлы, в которых есть лист дат лист курсов и количество дней для прогноза.
      */
     private void getResult(CurrencyFileReader currencyFileReader) {
         List<LocalDate> moonDate = getMoonDate();
@@ -58,13 +58,14 @@ public class MysticalAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод реализует алгоритм мистический
+     * Метод реализует алгоритм мистический.
      * - Для расчета на дату используем среднее арифметическое из трех последних от этой даты полнолуний.
      * - Для расчета на неделю и месяц. Первый курс рассчитывается аналогично предыдущему пункту.
-     * counterForRate - позволяет Последующие даты рассчитываются рекуррентно по формуле
+     * counterForRate - последующие даты рассчитываются рекуррентно по формуле
      * - значение предыдущей даты + случайное число от -10% до +10% от значения предыдущей даты.
      *
-     * @param currencyFileReader,moonDate,resultRate,stringList -файл в котором есть лист дат лист курсов и количество дней для прогноза.
+     * @param currencyFileReader,moonDate,resultRate,stringList -файл в котором есть лист дат лист курсов и количество
+     *                                                           дней для прогноза.
      *                                                          - список дат полнолуния.
      *                                                          -список курсов в результат.
      *                                                          -список строк результата с датами и курсами.
@@ -89,10 +90,10 @@ public class MysticalAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод реализует алгоритм мистический
+     * Метод реализует алгоритм мистический.
      * - Для расчета на дату используем среднее арифметическое из трех последних от этой даты полнолуний.
      *
-     * @param currencyFileReader -файл в котором есть лист дат лист курсов и количество дней для прогноза
+     * @param currencyFileReader - файл, в котором есть лист дат, лист курсов и количество дней для прогноза.
      */
     private void getForecastOnFirstDay(CurrencyFileReader currencyFileReader, List<LocalDate> moonDate,
                                        List<BigDecimal> resultsRate, List<String> stringList) {
@@ -111,7 +112,7 @@ public class MysticalAlgorithm implements Algorithm {
     }
 
     /**
-     * Метод получает список дат полнолуний до текущей даты
+     * Метод получает список дат полнолуний до текущей даты.
      *
      * @return List<LocalDate>
      */
@@ -129,16 +130,16 @@ public class MysticalAlgorithm implements Algorithm {
     /**
      * Метод получает разницу +10 от текущего значения-10% и прибавляет минимальное значение.
      *
-     * @return BigDecimal число в результат
+     * @return BigDecimal число в результат.
      */
     private BigDecimal getBigDecimalRange(BigDecimal minIncluding, BigDecimal maxExcluding) {
         return getBigDecimal(maxExcluding.subtract(minIncluding)).add(minIncluding);
     }
 
     /**
-     * Метод получает рандомное число из этой разницы
+     * Метод получает рандомное число из этой разницы.
      *
-     * @return BigDecimal рандомное число
+     * @return BigDecimal рандомное число.
      */
     private BigDecimal getBigDecimal(BigDecimal length) {
         return BigDecimal.valueOf(threadLocalRandom.nextDouble(Double.parseDouble(String.valueOf((length)))));

@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Класс реализует бота
+ * Класс реализует бота.
  *
  * @version 1.0
- * @autor Дельмеев Дамир
+ * @autor Дельмеев Дамир.
  */
 public class Bot extends TelegramLongPollingBot {
     final Logger logger = LoggerFactory.getLogger(Bot.class);
@@ -36,9 +36,9 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     /**
-     * Метод реализует работу бота и взаимодействие с пользователем
+     * Метод реализует работу бота и взаимодействие с пользователем.
      *
-     * @param update сообщение любого типа
+     * @param update сообщение любого типа.
      */
     @Override
     public void onUpdateReceived(Update update) {
