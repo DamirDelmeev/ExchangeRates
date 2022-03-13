@@ -2,10 +2,10 @@ package ru.liga.commands;
 
 import lombok.Getter;
 import org.apache.commons.lang3.time.DateUtils;
-import ru.liga.algorithm.ActualAlgorithm;
-import ru.liga.algorithm.Algorithm;
-import ru.liga.algorithm.MysticalAlgorithm;
-import ru.liga.algorithm.RegressionAlgorithm;
+import ru.liga.algorithms.ActualAlgorithm;
+import ru.liga.algorithms.Algorithm;
+import ru.liga.algorithms.MysticalAlgorithm;
+import ru.liga.algorithms.RegressionAlgorithm;
 import ru.liga.chart.Chart;
 import ru.liga.currencyFile.CurrencyFileReader;
 
@@ -36,7 +36,7 @@ public enum Commands implements AllCommands {
     ALG("alg", List.of("actual", "mystical", "regression")) {
         @Override
         public List<CurrencyFileReader> action(String argument, List<CurrencyFileReader> list) {
-            checkArguments(argument);
+            wrongArgumentToCheck(argument);
             switch (argument) {
                 case "actual": {
                     Algorithm actual = new ActualAlgorithm();
@@ -71,7 +71,7 @@ public enum Commands implements AllCommands {
             if (isDate(argument)) {
                 listDateResult.add(parseDate(argument));
             } else {
-                checkArguments(argument);
+                wrongArgumentToCheck(argument);
                 if (argument.equals("tomorrow")) {
                     listDateResult.add(LocalDate.now().plusDays(1));
                 }
@@ -90,7 +90,7 @@ public enum Commands implements AllCommands {
     PERIOD("period", List.of("month", "week")) {
         @Override
         public List<CurrencyFileReader> action(String argument, List<CurrencyFileReader> list) {
-            checkArguments(argument);
+            wrongArgumentToCheck(argument);
             List<LocalDate> listDateResult;
             if (argument.equals("month")) {
                 listDateResult = datesRangeClosed(LocalDate.now().plusDays(1),
@@ -114,16 +114,14 @@ public enum Commands implements AllCommands {
     OUTPUT("output", List.of("graph", "list")) {
         @Override
         public List<CurrencyFileReader> action(String argument, List<CurrencyFileReader> list) {
-            checkArguments(argument);
+            wrongArgumentToCheck(argument);
             if (argument.equals("graph")) {
                 list.get(0).setShowChart(true);
                 Chart lineChartSample = new Chart();
                 File extracted = lineChartSample.extracted(list);
                 list.get(0).setFile(extracted);
-                return list;
-            } else {
-                return list;
             }
+            return list;
         }
     };
     /**
@@ -143,14 +141,9 @@ public enum Commands implements AllCommands {
 
     /**
      * Метод реализует проверку на наличие аргумента в списке
-     *
-     * @param argument-аргумент после команды new RuntimeException if false
      */
-    protected void checkArguments(String argument) {
-        if (!arguments.contains(argument)) {
-
-            throw new RuntimeException("Ошибка неправильный аргумент");
-        }
+    protected boolean checkArguments(String argument) {
+        return arguments.contains(argument);
     }
 
     /**
@@ -160,7 +153,9 @@ public enum Commands implements AllCommands {
      * @return Commands: -alg=ALG
      */
     public static Commands checkCommands(String commands) {
-        return Arrays.stream(values()).filter(v -> v.getValue().equals(commands.toLowerCase())).findFirst().orElse(null);
+        return Arrays.stream(values()).filter(v -> v.getValue()
+                        .equals(commands.toLowerCase()))
+                .findFirst().orElse(null);
     }
 
     /**
@@ -204,5 +199,16 @@ public enum Commands implements AllCommands {
         return LongStream.rangeClosed(0, daysInPeriod)
                 .mapToObj(fromInclusive::plusDays)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Метод реализует проверку на наличие аргумента в списке
+     *
+     * @param argument-аргумент после команды new RuntimeException if false
+     */
+    void wrongArgumentToCheck(String argument) {
+        if (!checkArguments(argument)) {
+            throw new RuntimeException("Ошибка неправильный аргумент");
+        }
     }
 }

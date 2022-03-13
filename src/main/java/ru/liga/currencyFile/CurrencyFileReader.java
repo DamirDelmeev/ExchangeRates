@@ -2,11 +2,13 @@ package ru.liga.currencyFile;
 
 import au.com.bytecode.opencsv.CSVReader;
 import lombok.Data;
+import ru.liga.constants.Constant;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -91,7 +93,7 @@ public class CurrencyFileReader {
      */
     public void findRateListAndDate(List<String> lineList) {
         String[] splitForDate = lineList.get(0).split(";");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constant.DATE_FORMAT_FOR_CSV.getName());
         dateList.add(LocalDate.parse(splitForDate[1], formatter));
         int counterDays = 0;
         for (String line : lineList) {
@@ -100,14 +102,14 @@ public class CurrencyFileReader {
             BigDecimal nominal = BigDecimal.valueOf(Double.parseDouble(split[0]));
             LocalDate currentDate = LocalDate.parse(split[1], formatter);
             if (currentDate.plusDays(counterDays).equals(dateList.get(0))) {
-                currentRate = currentRate.divide(nominal);
+                currentRate = currentRate.divide(nominal, 10, RoundingMode.HALF_UP);
                 rateList.add(currentRate);
                 if (counterDays != 0) {
                     dateList.add(currentDate);
                 }
             } else {
                 Period between = getPeriodOfSkipAndAddChanges(split, currentDate, nominal);
-                currentRate = currentRate.divide(nominal);
+                currentRate = currentRate.divide(nominal, 10, RoundingMode.HALF_UP);
                 rateList.add(currentRate);
                 dateList.add(currentDate);
                 counterDays = counterDays + between.getDays() - 1;
@@ -137,24 +139,9 @@ public class CurrencyFileReader {
     private Period getPeriodOfSkipAndAddChanges(String[] split, LocalDate checkIfDateSkip, BigDecimal nominal) {
         Period between = Period.between(checkIfDateSkip, dateList.getLast());
         for (int i = 1; i < between.getDays(); i++) {
-            rateList.add(BigDecimal.valueOf(Double.parseDouble(split[2])).divide(nominal));
+            rateList.add(BigDecimal.valueOf(Double.parseDouble(split[2])).divide(nominal, 10, RoundingMode.HALF_UP));
             dateList.add(dateList.getLast().minusDays(1));
         }
         return between;
     }
-
-
-    public List<BigDecimal> getRateList() {
-        return rateList;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public List<String> getLineList() {
-        return lineList;
-    }
-
-
 }

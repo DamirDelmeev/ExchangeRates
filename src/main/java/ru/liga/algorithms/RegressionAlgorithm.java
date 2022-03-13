@@ -1,5 +1,6 @@
-package ru.liga.algorithm;
+package ru.liga.algorithms;
 
+import ru.liga.constants.Constant;
 import ru.liga.currencyFile.CurrencyFileReader;
 
 import java.math.BigDecimal;
@@ -16,6 +17,16 @@ import java.util.List;
  */
 public class RegressionAlgorithm implements Algorithm {
     /**
+     * Метод реализует алгоритм регрессии.
+     *
+     * @param list CurrencyFileReader -файлов в которых есть лист дат лист курсов и количество дней для прогноза
+     */
+    @Override
+    public void realizeAlgorithm(List<CurrencyFileReader> list) {
+        list.forEach(this::getResult);
+    }
+
+    /**
      * Метод реализует алгоритм регрессии по формуле: Y=a+bx
      * где Y: dependent variable -результат
      * a: intersect variable with Y-среднее ,узнаем по формуле a=y-bx (xWithBar)(yWithBar)
@@ -23,30 +34,27 @@ public class RegressionAlgorithm implements Algorithm {
      * x: independent variable- дата
      * добавит String result в файл из листа
      *
-     * @param list CurrencyFileReader -файлов в которых есть лист дат лист курсов и количество дней для прогноза
+     * @param currencyFileReader -файл в котором есть лист дат лист курсов и количество дней для прогноза
      */
-    @Override
-    public void realizeAlgorithm(List<CurrencyFileReader> list) {
-        list.forEach(currencyFileReader -> {
-            List<String> stringList = new ArrayList<>();
-            List<BigDecimal> dateListForRegression = getDateListToBigDecimal(currencyFileReader.getDateList());
-            List<BigDecimal> rateListForRegression = getRateListForRegression(currencyFileReader.getRateList());
-            List<BigDecimal> bAndAValues =
-                    getIntersectVariableAndSlopeValues(dateListForRegression, rateListForRegression);
-            List<BigDecimal> dateListToForecastDate = getDateListToForecastDate(currencyFileReader.getDateList(),
-                    currencyFileReader.getDateForForecastList());
-            List<BigDecimal> results = new ArrayList<>();
-            dateListToForecastDate.forEach(date -> {
-                results.add(bAndAValues.get(0).add(bAndAValues.get(1).multiply(date)));
-            });
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EE dd.MM.yyyy");
-            for (int i = 0; i < currencyFileReader.getDateForForecastList().size(); i++) {
-                stringList.add(dateFormat.format(currencyFileReader.getDateForForecastList().get(i))
-                        + " : " + String.format("%.2f", results.get(i)));
-            }
-            currencyFileReader.setResultString(String.join("\n", stringList));
-            currencyFileReader.setRateForForecastList(results);
-        });
+    private void getResult(CurrencyFileReader currencyFileReader) {
+        List<String> stringList = new ArrayList<>();
+        List<BigDecimal> dateListForRegression = getDateListToBigDecimal(currencyFileReader.getDateList());
+        List<BigDecimal> rateListForRegression = getRateListForRegression(currencyFileReader.getRateList());
+        List<BigDecimal> bAndAValues =
+                getIntersectVariableAndSlopeValues(dateListForRegression, rateListForRegression);
+        List<BigDecimal> dateListToForecastDate = getDateListToForecastDate(currencyFileReader.getDateList(),
+                currencyFileReader.getDateForForecastList());
+        List<BigDecimal> results = new ArrayList<>();
+        dateListToForecastDate.forEach(date -> results
+                .add(bAndAValues.get(0)
+                        .add(bAndAValues.get(1).multiply(date))));
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(Constant.DATE_FORMAT.getName());
+        for (int i = 0; i < currencyFileReader.getDateForForecastList().size(); i++) {
+            stringList.add(dateFormat.format(currencyFileReader.getDateForForecastList().get(i))
+                    + " : " + String.format(Constant.BIG_DECIMAL_FORMAT.getName(), results.get(i)));
+        }
+        currencyFileReader.setResultString(String.join("\n", stringList));
+        currencyFileReader.setRateForForecastList(results);
     }
 
     /**
@@ -67,8 +75,10 @@ public class RegressionAlgorithm implements Algorithm {
         BigDecimal yWithBar =
                 getSumBigDecimalList(rateListForRegression)
                         .divide(BigDecimal.valueOf(rateListForRegression.size()), 2, RoundingMode.HALF_UP);
+
         List<BigDecimal> xSquareList = getXSquareInList(dateListForRegression);
         BigDecimal xSquareSum = getSumBigDecimalList(xSquareList);
+
         BigDecimal b = getSlope(xAndYSumListTotal, dateListForRegression.size(), xWithBar, yWithBar, xSquareSum);
         BigDecimal a = getIntersectVariable(yWithBar, b, xWithBar);
         return Arrays.asList(a, b);
@@ -91,11 +101,9 @@ public class RegressionAlgorithm implements Algorithm {
      * @param dateList -лист дат из файла
      * @return лист счётчика дат
      */
-    public List<BigDecimal> getDateListToBigDecimal(List<LocalDate> dateList) {
+    private List<BigDecimal> getDateListToBigDecimal(List<LocalDate> dateList) {
         List<BigDecimal> BigDecimalDateList = new ArrayList<>();
-        dateList.forEach(localDate -> {
-            BigDecimalDateList.add(BigDecimal.valueOf((dateList.indexOf(localDate) + 1)));
-        });
+        dateList.forEach(localDate -> BigDecimalDateList.add(BigDecimal.valueOf((dateList.indexOf(localDate) + 1))));
         return BigDecimalDateList;
     }
 
@@ -107,9 +115,8 @@ public class RegressionAlgorithm implements Algorithm {
      */
     public List<BigDecimal> getDateListToForecastDate(List<LocalDate> dateList, List<LocalDate> forecastDate) {
         List<BigDecimal> BigDecimalDateList = new ArrayList<>();
-        forecastDate.forEach(localDate -> {
-            BigDecimalDateList.add(BigDecimal.valueOf((forecastDate.indexOf(localDate)) + 1 + dateList.size()));
-        });
+        forecastDate.forEach(localDate ->
+                BigDecimalDateList.add(BigDecimal.valueOf((forecastDate.indexOf(localDate)) + 1 + dateList.size())));
         return BigDecimalDateList;
     }
 
@@ -119,7 +126,7 @@ public class RegressionAlgorithm implements Algorithm {
      * @param rateList -лист курсов по которым будет прогноз
      * @return лист курсов в BigDecimal;
      */
-    public List<BigDecimal> getRateListForRegression(List<BigDecimal> rateList) {
+    private List<BigDecimal> getRateListForRegression(List<BigDecimal> rateList) {
         List<BigDecimal> rateListForRegression = new ArrayList<>(rateList);
         Collections.reverse(rateListForRegression);
         return rateListForRegression;
@@ -158,9 +165,7 @@ public class RegressionAlgorithm implements Algorithm {
      */
     private List<BigDecimal> getXSquareInList(List<BigDecimal> dateListForRegression) {
         List<BigDecimal> xSquareList = new ArrayList<>();
-        dateListForRegression.forEach(dateInInteger -> {
-            xSquareList.add((dateInInteger.multiply(dateInInteger)));
-        });
+        dateListForRegression.forEach(dateInInteger -> xSquareList.add((dateInInteger.multiply(dateInInteger))));
         return xSquareList;
     }
 

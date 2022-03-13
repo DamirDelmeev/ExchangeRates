@@ -13,7 +13,6 @@ import ru.liga.bot.Bot;
  * @autor Дельмеев Дамир
  */
 public class RateForecastApplication {
-
     public static void main(String[] args) {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);

@@ -26,7 +26,6 @@ public class InputHandler {
             Currency.AMD.getName(), Currency.EUR.getName(), Currency.USD.getName(), Currency.TRY.getName(),
             Currency.BGN.getName());
 
-
     /**
      * Проверка на наличие недопустимых слов вводе
      */

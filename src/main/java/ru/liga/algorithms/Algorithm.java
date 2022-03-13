@@ -1,4 +1,4 @@
-package ru.liga.algorithm;
+package ru.liga.algorithms;
 
 import ru.liga.currencyFile.CurrencyFileReader;
 
